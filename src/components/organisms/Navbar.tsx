@@ -1,9 +1,15 @@
-import { useState, FC } from "react";
+import { useState } from "react";
 import { NavButton } from "../atoms/NavButton";
 import { MobileMenu } from "../molecules/MobileMenu";
 import { DesktopMenu } from "../molecules/DesktopMenu";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
-export const Navbar: FC = () => {
+export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -11,9 +17,9 @@ export const Navbar: FC = () => {
   };
 
   return (
-    <nav className="bg-zinc-200">
+    <nav className="sticky top-0 left-0 bg-opacity-90 bg-zinc-100">
       <div className="px-2 mx-auto sm:px-6 lg:px-8">
-        <div className="sticky top-0 flex items-center justify-between w-full h-16 bg-opacity-50 ">
+        <div className="flex items-center justify-between w-full p-4">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <NavButton onClick={toggleMenu} isOpen={isOpen} />
           </div>
@@ -22,9 +28,17 @@ export const Navbar: FC = () => {
               <DesktopMenu />
             </div>
           </div>
+          <MobileMenu isOpen={isOpen} />
+          <div>
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
         </div>
       </div>
-      <MobileMenu isOpen={isOpen} />
     </nav>
   );
 };

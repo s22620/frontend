@@ -15,16 +15,19 @@ export const TripsTile: FC<TripsTileProps> = ({ trip }) => {
 
   return (
     <div
-      className="w-full h-40 p-4 cursor-pointer rounded-xl bg-zinc-100"
+      className="w-full p-4 text-white bg-center bg-cover cursor-pointer rounded-xl"
+      style={{ backgroundImage: `url(${trip.imageSrc})` }}
       onClick={handleClick}
     >
-      <h1 className="text-lg font-bold">{trip.title}</h1>
-      <p>{trip.description}</p>
-      <p>
-        Od {new Date(trip.startDate).toLocaleDateString()} do{" "}
-        {new Date(trip.endDate).toLocaleDateString()}
-      </p>
-      <p>{trip.price}zł</p>
+      <div className="p-2 bg-black bg-opacity-50 rounded-xl">
+        <h1 className="text-lg font-bold">{trip.title}</h1>
+        <p>{trip.description}</p>
+        <p>
+          Od {new Date(trip.startDate).toLocaleDateString()} do{" "}
+          {new Date(trip.endDate).toLocaleDateString()}
+        </p>
+        <p>{trip.price}zł</p>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import get from "axios";
+import axios from "axios";
 
 export const getTrips = async () => {
-  const response = await get(import.meta.env.VITE_API_URL + "/trips");
+  const response = await axios.get(import.meta.env.VITE_API_URL + "/trips");
   return response.data;
 };

@@ -15,7 +15,7 @@ export const NavLinksList: FC<NavLinksListProps> = ({
       className={
         isMobile
           ? "space-y-1 flex flex-col justify-center items-center gap-10"
-          : "flex text-2xl space-x-4"
+          : "flex text-2xl space-x-4 gap-10"
       }
     >
       {links.map((link) => (
