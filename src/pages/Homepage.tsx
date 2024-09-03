@@ -1,8 +1,10 @@
-export const Homepage = () => {
+import { Layout } from "../components/templates/Layout";
 
+export const Homepage = () => {
   return (
-    <main>
-        <h1 className="text-red-300">Hello world</h1>
-    </main>
-  )
-}
+    <Layout>
+      <h1>Homepage</h1>
+      <p>Welcome to the homepage!</p>
+    </Layout>
+  );
+};
