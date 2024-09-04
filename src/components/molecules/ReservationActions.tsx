@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useQueryClient } from "react-query";
 import { useUpdateReservation } from "../../hooks/useUpdateReservation";
 import { useDeleteReservation } from "../../hooks/useDeleteReservation";
 import { ReservationType } from "../../types/reservation.type";
@@ -12,12 +13,25 @@ interface ReservationActionsProps {
 export const ReservationActions: FC<ReservationActionsProps> = ({
   reservation,
 }) => {
+  const queryClient = useQueryClient(); // Używamy queryClient do odświeżania danych
   const updateMutation = useUpdateReservation();
   const deleteMutation = useDeleteReservation();
 
   const handleUpdate = (field: "numAdults" | "numChildren", value: number) => {
-    const updatedData = { [field]: value };
-    updateMutation.mutate({ reservationId: reservation.id, updatedData });
+    if (reservation.id) {
+      const updatedData = { [field]: value };
+      updateMutation.mutate(
+        { reservationId: reservation.id, updatedData },
+        {
+          onSuccess: () => {
+            // Po udanej aktualizacji, odśwież dane rezerwacji
+            queryClient.invalidateQueries("userReservations");
+          },
+        }
+      );
+    } else {
+      console.error("Reservation ID is undefined");
+    }
   };
 
   const totalPeople = reservation.numAdults + reservation.numChildren;
@@ -26,8 +40,18 @@ export const ReservationActions: FC<ReservationActionsProps> = ({
   const canDecreaseChildren = reservation.numChildren > 0 && totalPeople > 1;
 
   const handleDelete = () => {
-    if (window.confirm("Czy na pewno chcesz anulować tę rezerwację?")) {
-      deleteMutation.mutate(reservation.id);
+    if (
+      reservation.id &&
+      window.confirm("Czy na pewno chcesz anulować tę rezerwację?")
+    ) {
+      deleteMutation.mutate(reservation.id, {
+        onSuccess: () => {
+          // Po udanym usunięciu, odśwież dane rezerwacji
+          queryClient.invalidateQueries("userReservations");
+        },
+      });
+    } else {
+      console.error("Reservation ID is undefined");
     }
   };
 

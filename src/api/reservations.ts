@@ -22,6 +22,14 @@ export const getUserReservations = async (userEmail: string) => {
   return response.data;
 };
 
+export const createReservation = async (reservationData: ReservationType) => {
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_URL}/reservations`,
+    reservationData
+  );
+  return response.data;
+};
+
 // Funkcja usuwania rezerwacji
 export const deleteReservation = async (reservationId: string) => {
   await axios.delete(

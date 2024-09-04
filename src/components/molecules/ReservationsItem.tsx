@@ -32,15 +32,34 @@ export const ReservationItem: FC<ReservationItemProps> = ({ reservation }) => {
   const totalPrice =
     reservation.numAdults * adultPrice + reservation.numChildren * childPrice;
 
+  // Konwersja daty na czytelny format
+  const formattedStartDate = new Date(trip.startDate).toLocaleDateString(
+    "pl-PL",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }
+  );
+
+  const formattedEndDate = new Date(trip.endDate).toLocaleDateString("pl-PL", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg shadow-md">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">{reservation.name}</h2>
+        <h2 className="text-xl font-bold text-gray-800">{trip.title}</h2>
         <p className="text-gray-600">
           {reservation.numAdults} dorosłych, {reservation.numChildren} dzieci
         </p>
         <p className="font-semibold text-gray-900">
           Cena: {totalPrice.toFixed(2)}zł
+        </p>
+        <p>
+          Od {formattedStartDate} do {formattedEndDate}
         </p>
       </div>
       <ReservationActions reservation={reservation} />
