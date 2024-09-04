@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ReservationType } from "../types/reservation.type";
 
+// Funkcja pobierania wszystkich rezerwacji (dla administratora)
 export const getReservations = async () => {
   const response = await axios.get(
     import.meta.env.VITE_API_URL + "/reservations"
@@ -8,19 +9,33 @@ export const getReservations = async () => {
   return response.data;
 };
 
+// Funkcja pobierania rezerwacji użytkownika na podstawie adresu e-mail
+export const getUserReservations = async (userEmail: string) => {
+  const response = await axios.get(
+    import.meta.env.VITE_API_URL + "/reservations/user",
+    {
+      headers: {
+        "user-email": userEmail, // Przesyłanie adresu e-mail w nagłówku
+      },
+    }
+  );
+  return response.data;
+};
+
+// Funkcja usuwania rezerwacji
 export const deleteReservation = async (reservationId: string) => {
   await axios.delete(
     `${import.meta.env.VITE_API_URL}/reservations/${reservationId}`
   );
 };
 
+// Funkcja aktualizacji rezerwacji
 export const updateReservation = async (
   reservationId: string,
   updatedData: Partial<ReservationType>
 ) => {
-  const response = await axios.patch(
+  return axios.put(
     `${import.meta.env.VITE_API_URL}/reservations/${reservationId}`,
     updatedData
   );
-  return response.data;
 };

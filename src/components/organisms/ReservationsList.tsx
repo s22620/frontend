@@ -1,8 +1,22 @@
-import { useReservations } from "../../hooks/useReservations";
+import { useUser } from "@clerk/clerk-react"; // Importujemy hook Clerk do pobierania danych użytkownika
+import { useUserReservations } from "../../hooks/useUserReservations";
 import { ReservationItem } from "../molecules/ReservationsItem";
 
 export const ReservationsList = () => {
-  const { data: reservations, isLoading, error } = useReservations();
+  const { user } = useUser(); // Pobieramy obiekt użytkownika z Clerk
+
+  const userEmail = user?.emailAddresses[0]?.emailAddress; // Pobieramy pierwszy adres e-mail użytkownika
+
+  // Sprawdzamy, czy email jest dostępny przed wywołaniem hooka
+  const {
+    data: reservations,
+    isLoading,
+    error,
+  } = useUserReservations(userEmail || "");
+
+  if (!userEmail) {
+    return <p>Nie znaleziono adresu e-mail użytkownika.</p>;
+  }
 
   if (isLoading) {
     return <p>Ładowanie rezerwacji...</p>;
