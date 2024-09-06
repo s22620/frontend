@@ -13,3 +13,23 @@ export const getTrip = async (tripId: string): Promise<TripType> => {
   );
   return response.data;
 };
+
+export const createTrip = async (tripData: TripType): Promise<TripType> => {
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_URL}/trips`,
+    tripData
+  );
+  return response.data;
+};
+
+export const deleteTrip = async (tripId: string) => {
+  await axios.delete(`${import.meta.env.VITE_API_URL}/trips/${tripId}`);
+};
+
+export const updateTrip = async (tripData: TripType): Promise<TripType> => {
+  const response = await axios.put(
+    `${import.meta.env.VITE_API_URL}/trips/${tripData.id}`,
+    tripData
+  );
+  return response.data;
+};

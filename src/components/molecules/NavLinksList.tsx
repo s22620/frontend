@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
+import { useAdmin } from "../../hooks/useAdmin";
 
 interface NavLinksListProps {
   links: { to: string; label: string }[];
@@ -10,6 +11,7 @@ export const NavLinksList: FC<NavLinksListProps> = ({
   links,
   isMobile = false,
 }) => {
+  const { isAdmin } = useAdmin();
   return (
     <div
       className={
@@ -23,6 +25,7 @@ export const NavLinksList: FC<NavLinksListProps> = ({
           {link.label}
         </NavLink>
       ))}
+      {isAdmin && <NavLink to="/dashboard">Panel administratora</NavLink>}
     </div>
   );
 };

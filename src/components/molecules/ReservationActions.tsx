@@ -56,7 +56,7 @@ export const ReservationActions: FC<ReservationActionsProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-3 space-y-4 md:flex-row md:gap-10">
+    <div className="flex justify-center gap-3 space-y-4 md:flex-row md:gap-10">
       <Counter
         label="Dorośli"
         value={reservation.numAdults}

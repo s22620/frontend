@@ -17,7 +17,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 left-0 bg-opacity-90 bg-zinc-100">
+    <nav className="sticky top-0 left-0 z-40 bg-zinc-100">
       <div className="px-2 mx-auto sm:px-6 lg:px-8">
         <div className="flex items-center justify-between w-full p-4">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
